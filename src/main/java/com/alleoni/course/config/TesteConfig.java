@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.alleoni.course.entities.Category;
 import com.alleoni.course.entities.Order;
+import com.alleoni.course.entities.Product;
 import com.alleoni.course.entities.User;
 import com.alleoni.course.entities.enums.OrderStatus;
 import com.alleoni.course.repositories.CategoryRepository;
 import com.alleoni.course.repositories.OrderRepository;
+import com.alleoni.course.repositories.ProductRepository;
 import com.alleoni.course.repositories.UserRepository;
 
 @Configuration // @Configuration para informar que é apenas arquivo de configuração.
@@ -29,6 +31,9 @@ public class TesteConfig implements CommandLineRunner { // CommandoLineRuuner se
 
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private ProductRepository productRepository;
 
 	@Override
 	public void run(String... args) throws Exception { // Métodos implementado class TesteConfig
@@ -37,7 +42,15 @@ public class TesteConfig implements CommandLineRunner { // CommandoLineRuuner se
 		Category cat2 = new Category(null, "Books");
 		Category cat3 = new Category(null, "Computers");
 		
+		Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, ""); 
+		Product p2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, ""); 
+		Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, ""); 
+		Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, ""); 
+		Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, ""); 
+		
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+		
+		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
 		User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
