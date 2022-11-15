@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.alleoni.course.entities.Category;
 import com.alleoni.course.entities.Order;
+import com.alleoni.course.entities.OrderItem;
 import com.alleoni.course.entities.Product;
 import com.alleoni.course.entities.User;
 import com.alleoni.course.entities.enums.OrderStatus;
 import com.alleoni.course.repositories.CategoryRepository;
+import com.alleoni.course.repositories.OrderItemRepository;
 import com.alleoni.course.repositories.OrderRepository;
 import com.alleoni.course.repositories.ProductRepository;
 import com.alleoni.course.repositories.UserRepository;
@@ -24,7 +26,7 @@ public class TesteConfig implements CommandLineRunner { // CommandoLineRuuner se
 														// iniciado
 
 	@Autowired // Serve para associar uma instância de user repository
-	private UserRepository userRepository; // Objeto repository que acessa os dados
+	private UserRepository userRepository; // Objeto repository que acessa os dados. 
 
 	@Autowired
 	private OrderRepository orderRepository;
@@ -34,6 +36,9 @@ public class TesteConfig implements CommandLineRunner { // CommandoLineRuuner se
 
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
 	@Override
 	public void run(String... args) throws Exception { // Métodos implementado class TesteConfig
@@ -69,6 +74,13 @@ public class TesteConfig implements CommandLineRunner { // CommandoLineRuuner se
 
 		userRepository.saveAll(Arrays.asList(u1, u2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+		
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice()); 
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice()); 
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice()); 
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 
 	}
 

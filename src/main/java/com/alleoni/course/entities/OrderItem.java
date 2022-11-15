@@ -3,6 +3,8 @@ package com.alleoni.course.entities;
 import java.io.Serializable;
 
 import com.alleoni.course.entities.pk.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -14,7 +16,8 @@ public class OrderItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private OrderItemPK id;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private OrderItemPK id = new OrderItemPK(); //Devemos instanciar toda vez que criarmos um Id Composto, para evitar que seu valor seja iniciado com NULL. Evitando o erro NullPointerException.
 	
 	private Integer quantity;
 	private Double price;
@@ -31,6 +34,7 @@ public class OrderItem implements Serializable {
 		this.price = price;
 	}
 	
+	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
 	}
