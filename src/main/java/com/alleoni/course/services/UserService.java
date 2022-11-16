@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.alleoni.course.entities.User;
 import com.alleoni.course.repositories.UserRepository;
+import com.alleoni.course.services.exceptions.ResourceNotFoundException;
 
 //@Component Registra pra você sua classe como componente do Spring e vai poder ser injetado assim automaticamente com o AutoWired
 @Service
@@ -22,7 +23,7 @@ public class UserService {
 
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get(); // Vai retornar o objeto do tipo <User> que estiver dentro do Optional<User>
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id)); // Vai retornar o objeto do tipo <User> que estiver dentro do Optional<User>
 	}
 	
 	public User insert(User obj) {
