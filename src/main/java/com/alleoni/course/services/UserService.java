@@ -13,6 +13,8 @@ import com.alleoni.course.repositories.UserRepository;
 import com.alleoni.course.services.exceptions.DatabaseException;
 import com.alleoni.course.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 //@Component Registra pra você sua classe como componente do Spring e vai poder ser injetado assim automaticamente com o AutoWired
 @Service
 public class UserService {
@@ -45,10 +47,13 @@ public class UserService {
 	}
 	
 	public User update(Long id, User obj) {
+		try {
 		User entity = findById(id);
 		updateData(entity, obj);
 		return repository.save(entity);
-		
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateData(User entity, User obj) {
